@@ -52,16 +52,67 @@ NutriFind is a full-stack Next.js and Express application designed to help users
    - Frontend will run on `http://localhost:3000`
    - Backend will run on `http://localhost:4000`
 
-## Testing
+## Architecture
 
-Backend integration tests are written using Vitest and Supertest.
+```text
+Browser / Next.js
+       │
+       ▼
+Express Backend
+   │       │
+   │       ├── Stripe
+   │       │
+   │       ├── Open Food Facts
+   │       │
+   ▼       │
+Prisma → MySQL
+```
+
+The application uses a clean layer separation:
+- **Routing:** Express endpoints parse input and delegate to services.
+- **Service Layer:** `OpenFoodFactsService` fetches raw data from the legacy OFF API. `ProductAccessService` applies business logic to conditionally strip out nutrition fields based on subscription status.
+- **Data Layer:** Prisma abstracts MySQL operations.
+
+## Security & Premium Rules
+
+The premium gate operates securely on the backend:
+1. When `SubscriptionStatus` is `INACTIVE`, the backend forces all nutrition data to `null` and sets `nutritionLocked = true` before sending JSON to the frontend.
+2. When `ACTIVE`, the full nutrition object is sent.
+This ensures detailed metrics (calories, fat, protein, etc.) are never exposed in the raw Network tab for unsubscribed users, unlike implementations that merely hide data using CSS/React state.
+
+**Stripe Webhook Security:** The `/api/webhooks/stripe` route is configured with `express.raw({ type: "application/json" })` to ensure the raw body remains intact, which is strictly required for validating the `stripe-signature` header against `STRIPE_WEBHOOK_SECRET`.
+
+## i18n Strategy
+
+A lightweight, custom translation hook (`useTranslation`) was implemented on the frontend without relying on heavy libraries like `next-i18next`. It loads JSON dictionaries for `en`, `nl`, `de`, and `fr`. 
+When a product's name is requested, the backend performs a deterministic fallback: `product_name_[lang] ?? product_name_en ?? product_name ?? "Unnamed product"`.
+
+## Open Food Facts Limitation
+
+The Open Food Facts legacy `/cgi/search.pl` endpoint is used because the v2/v3 Product Opener API currently lacks free-text search functionality. 
+Because the legacy endpoint can aggressively rate-limit anonymous requests and return `503 Service Unavailable`, the backend is designed to handle this gracefully by throwing a clean `"Product service is temporarily unavailable"` error rather than returning mock data in production or crashing.
+
+## Testing the Application
+
+### 1. Backend Integration Tests
+Tests are written with Vitest and Supertest. They use vi.mock to simulate OpenFoodFacts responses.
 ```bash
 cd backend
 npm test
 ```
 
-## Assumptions & Decisions
+### 2. Testing Stripe Subscriptions End-to-End
+1. In `backend/.env`, configure a real `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` from a Stripe Test Mode dashboard.
+2. In your terminal, use the Stripe CLI to forward events to your local server:
+   ```bash
+   stripe listen --forward-to localhost:4000/api/webhooks/stripe
+   ```
+   *Copy the webhook secret printed by the CLI into your `backend/.env` file.*
+3. Open the UI, search a product, and click "Unlock Nutrition". Complete the test checkout.
+4. The webhook will fire `checkout.session.completed` and `customer.subscription.created`, updating the MySQL demo user to `ACTIVE`.
+5. Refresh the frontend search; the nutrition data will now be fully visible!
 
-- **Open Food Facts API:** We used the legacy `/cgi/search.pl` endpoint because the current v2/v3 Product Opener APIs do not natively support full-text search. This is isolated behind the `OpenFoodFactsService`.
-- **Demo User Authentication:** Full JWT authentication was omitted as per requirements. We default to querying a seeded `demo@example.com` user for tracking searches and subscription status.
-- **Stripe Webhooks:** The Express app was explicitly configured to use `express.raw()` for the `/api/webhooks/stripe` route to ensure Stripe signature validation succeeds.
+## Known Limitations
+
+- **Authentication:** To focus on the core requirements, a single seeded `demo@example.com` user is hardcoded in the controllers. In a real application, this would be replaced by JWT or session-based authentication parsing `req.user`.
+- **Search Rate Limits:** Heavy, rapid searching may trigger `503` errors from Open Food Facts if not authenticated with an OFF contributor account.
