@@ -34,7 +34,12 @@ export default function Home() {
       const res = await fetch(`${API_URL}/api/searches/recent`);
       if (res.ok) {
         const data = await res.json();
-        setRecentSearches(data.recentSearches);
+        if (data.searches) {
+          const queries = Array.from(new Set<string>(data.searches.map((s: any) => s.query)));
+          setRecentSearches(queries);
+        } else {
+          setRecentSearches([]);
+        }
       }
     } catch (err) {
       console.error("Failed to load recent searches", err);

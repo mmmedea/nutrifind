@@ -85,7 +85,7 @@ export function Hero({
         </motion.form>
 
         {/* Recent Searches */}
-        {recentSearches.length > 0 && (
+        {(recentSearches || []).length > 0 && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
