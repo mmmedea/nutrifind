@@ -1,0 +1,112 @@
+"use client";
+
+import * as React from "react";
+import { motion } from "motion/react";
+import { Search, Loader2 } from "lucide-react";
+
+interface HeroProps {
+  t: (key: string) => string;
+  searchQuery: string;
+  setSearchQuery: (q: string) => void;
+  onSearch: (e: React.FormEvent) => void;
+  isSearching: boolean;
+  recentSearches: string[];
+  onRecentClick: (query: string) => void;
+}
+
+export function Hero({
+  t,
+  searchQuery,
+  setSearchQuery,
+  onSearch,
+  isSearching,
+  recentSearches,
+  onRecentClick,
+}: HeroProps) {
+  return (
+    <section className="relative flex flex-col items-center justify-center overflow-hidden px-4 py-20 sm:py-32 text-center">
+      {/* Animated Background Blobs */}
+      <motion.div
+        animate={{ x: [0, 20, 0], y: [0, -15, 0] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute -left-10 top-10 h-64 w-64 rounded-full bg-emerald-200/30 dark:bg-emerald-900/20 blur-3xl"
+      />
+      <motion.div
+        animate={{ x: [0, -20, 0], y: [0, 15, 0] }}
+        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute right-0 top-20 h-72 w-72 rounded-full bg-lime-200/25 dark:bg-lime-900/10 blur-3xl"
+      />
+
+      <div className="relative z-10 mx-auto max-w-3xl">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-8 flex flex-col items-center gap-4"
+        >
+          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1 text-sm font-medium text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950 dark:text-emerald-300">
+            <span>✦</span>
+            <span>{t("searchSmarter") || "Search smarter. Eat informed."}</span>
+          </div>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
+            {t("discoverFood") || "Discover what's really in your food."}
+          </h1>
+          <p className="max-w-xl text-lg text-zinc-600 dark:text-zinc-400">
+            {t("searchSubtitle") || "Search packaged foods from around the world and understand what you're eating."}
+          </p>
+        </motion.div>
+
+        {/* Search Bar */}
+        <motion.form
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          onSubmit={onSearch}
+          className="relative mx-auto flex w-full max-w-2xl items-center rounded-2xl bg-white p-2 shadow-sm border border-zinc-200 focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500 dark:bg-zinc-900 dark:border-zinc-800 dark:focus-within:border-emerald-500 transition-all"
+        >
+          <div className="pl-4 pr-2 text-zinc-400">
+            <Search className="h-5 w-5" />
+          </div>
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder={t("searchPlaceholder") || "Search Nutella, Oreo..."}
+            className="flex-1 bg-transparent py-3 px-2 outline-none text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400"
+          />
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            disabled={isSearching}
+            className="flex items-center justify-center rounded-xl bg-emerald-600 px-6 py-3 font-medium text-white shadow-sm transition hover:bg-emerald-700 disabled:opacity-70 disabled:hover:bg-emerald-600"
+          >
+            {isSearching ? <Loader2 className="h-5 w-5 animate-spin" /> : t("searchButton")}
+          </motion.button>
+        </motion.form>
+
+        {/* Recent Searches */}
+        {recentSearches.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="mt-8 flex flex-wrap items-center justify-center gap-3 text-sm text-zinc-500 dark:text-zinc-400"
+          >
+            <span className="font-medium">{t("recentSearches")}:</span>
+            {recentSearches.map((query, i) => (
+              <button
+                key={i}
+                onClick={() => onRecentClick(query)}
+                className="flex items-center gap-1.5 rounded-full border border-black/5 dark:border-white/5 bg-white dark:bg-zinc-800 px-3 py-1.5 transition-colors hover:border-emerald-500 hover:bg-emerald-50 hover:text-emerald-700 dark:hover:border-emerald-500/50 dark:hover:bg-emerald-950/30 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                aria-label={`Search again for ${query}`}
+              >
+                <span className="text-[10px]">↻</span>
+                {query}
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </div>
+    </section>
+  );
+}
