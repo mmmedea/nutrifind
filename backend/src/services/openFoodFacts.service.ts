@@ -1,4 +1,5 @@
 import axios from "axios";
+import { AppError } from "../middleware/errorHandler";
 import { ProductSearchResult, SupportedLanguage } from "../types/product";
 
 export interface ProductSearchProvider {
@@ -29,26 +30,12 @@ export class OpenFoodFactsService implements ProductSearchProvider {
       const products = response.data.products || [];
       
       return products.map((p: any) => this.normalizeProduct(p, language));
-    } catch (error) {
-      console.error("OpenFoodFacts search error:", error);
-      // Fallback for development if OFF returns 503
-      return [
-        {
-          id: "3017624010701",
-          name: "Nutella (Mock Fallback)",
-          brand: "Ferrero",
-          imageUrl: "https://images.openfoodfacts.org/images/products/301/762/401/0701/front_en.551.400.jpg",
-          nutrition: {
-            energyKcal: 539,
-            fat: 30.9,
-            carbohydrates: 57.5,
-            sugars: 56.3,
-            protein: 6.3,
-            salt: 0.107
-          },
-          nutritionLocked: false
-        }
-      ];
+    } catch (error: any) {
+      console.error("OpenFoodFacts search error:", error.message);
+      if (error.response?.status === 503) {
+        throw new AppError(503, "Product service is temporarily unavailable.");
+      }
+      throw new AppError(500, "Failed to fetch products from Open Food Facts");
     }
   }
 

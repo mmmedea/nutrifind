@@ -4,7 +4,7 @@ import prisma from "../utils/prisma";
 
 export async function handleStripeWebhook(req: Request, res: Response, next: NextFunction) {
   const sig = req.headers["stripe-signature"] as string;
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || "whsec_test";
 
   let event;
 
