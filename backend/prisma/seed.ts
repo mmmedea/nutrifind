@@ -1,6 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "../src/utils/prisma";
 
-const prisma = new PrismaClient();
 const DEMO_USER_EMAIL = "demo@example.com";
 
 async function main() {
@@ -22,4 +21,5 @@ main()
   })
   .finally(async () => {
     await prisma.$disconnect();
+    process.exit(0);
   });

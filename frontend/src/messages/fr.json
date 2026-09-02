@@ -1,0 +1,18 @@
+{
+  "search": "Rechercher",
+  "searchPlaceholder": "Rechercher des produits emballés...",
+  "recentSearches": "Recherches récentes",
+  "nutrition": "Valeurs nutritionnelles",
+  "nutritionPer100g": "Valeurs nutritionnelles pour 100 g",
+  "subscribe": "S'abonner",
+  "upgradeMessage": "Valeurs nutritionnelles détaillées\nDisponible avec Premium\nVoir les calories, protéines, glucides, graisses, sucres, sel et autres valeurs nutritionnelles.",
+  "unlockNutrition": "Débloquer les valeurs",
+  "energy": "Énergie",
+  "fat": "Matières grasses",
+  "carbohydrates": "Glucides",
+  "sugars": "Sucres",
+  "protein": "Protéines",
+  "salt": "Sel",
+  "noProducts": "Aucun produit trouvé",
+  "error": "Une erreur s'est produite"
+}

@@ -1,0 +1,18 @@
+{
+  "search": "Search",
+  "searchPlaceholder": "Search packaged foods...",
+  "recentSearches": "Recent searches",
+  "nutrition": "Nutrition",
+  "nutritionPer100g": "Nutrition per 100 g",
+  "subscribe": "Subscribe",
+  "upgradeMessage": "Detailed nutrition\nAvailable with Premium\nView calories, protein, carbohydrates, fat, sugar, salt and other nutritional values.",
+  "unlockNutrition": "Unlock Nutrition",
+  "energy": "Energy",
+  "fat": "Fat",
+  "carbohydrates": "Carbohydrates",
+  "sugars": "Sugars",
+  "protein": "Protein",
+  "salt": "Salt",
+  "noProducts": "No products found",
+  "error": "Something went wrong"
+}

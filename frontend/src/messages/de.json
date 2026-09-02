@@ -1,0 +1,18 @@
+{
+  "search": "Suche",
+  "searchPlaceholder": "Verpackte Lebensmittel suchen...",
+  "recentSearches": "Letzte Suchanfragen",
+  "nutrition": "Nährwerte",
+  "nutritionPer100g": "Nährwerte pro 100 g",
+  "subscribe": "Abonnieren",
+  "upgradeMessage": "Detaillierte Nährwerte\nVerfügbar mit Premium\nSehen Sie Kalorien, Proteine, Kohlenhydrate, Fett, Zucker, Salz und andere Nährwerte.",
+  "unlockNutrition": "Nährwerte freischalten",
+  "energy": "Energie",
+  "fat": "Fett",
+  "carbohydrates": "Kohlenhydrate",
+  "sugars": "Zucker",
+  "protein": "Proteine",
+  "salt": "Salz",
+  "noProducts": "Keine Produkte gefunden",
+  "error": "Etwas ist schief gelaufen"
+}

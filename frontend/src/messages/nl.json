@@ -1,0 +1,18 @@
+{
+  "search": "Zoeken",
+  "searchPlaceholder": "Zoek naar verpakte voedingsmiddelen...",
+  "recentSearches": "Recente zoekopdrachten",
+  "nutrition": "Voedingswaarden",
+  "nutritionPer100g": "Voedingswaarden per 100 g",
+  "subscribe": "Abonneren",
+  "upgradeMessage": "Gedetailleerde voedingswaarden\nBeschikbaar met Premium\nBekijk calorieën, eiwitten, koolhydraten, vetten, suikers, zout en andere voedingswaarden.",
+  "unlockNutrition": "Ontgrendel voedingswaarden",
+  "energy": "Energie",
+  "fat": "Vetten",
+  "carbohydrates": "Koolhydraten",
+  "sugars": "Suikers",
+  "protein": "Eiwitten",
+  "salt": "Zout",
+  "noProducts": "Geen producten gevonden",
+  "error": "Er is iets misgegaan"
+}
