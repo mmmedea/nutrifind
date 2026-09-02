@@ -14,5 +14,12 @@
   "protein": "Protein",
   "salt": "Salt",
   "noProducts": "No products found",
-  "error": "Something went wrong"
+  "error": "Something went wrong",
+  "discoverFoodTitleLine1": "Discover what's really",
+  "discoverFoodTitleLine2": "in your food.",
+  "searchSmarter": "Search smarter",
+  "searchSubtitle": "Find packaged foods and explore their nutritional information.",
+  "searchButton": "Search",
+  "errorTitle": "Search is temporarily unavailable",
+  "tryAgain": "Try again"
 }

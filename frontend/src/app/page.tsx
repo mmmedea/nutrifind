@@ -35,7 +35,7 @@ export default function Home() {
       if (res.ok) {
         const data = await res.json();
         if (data.searches) {
-          const queries = Array.from(new Set<string>(data.searches.map((s: any) => s.query)));
+          const queries = Array.from(new Set<string>(data.searches.map((s: { query: string }) => s.query)));
           setRecentSearches(queries);
         } else {
           setRecentSearches([]);
@@ -100,13 +100,14 @@ export default function Home() {
 
   return (
     <>
+      <div className="pointer-events-none absolute inset-0 hidden dark:block bg-[radial-gradient(circle_at_50%_0%,rgba(16,185,129,0.08),transparent_35%)] z-0" />
       <Header 
         lang={lang} 
         setLang={setLang} 
         subscriptionStatus={subscriptionStatus} 
       />
       
-      <main className="flex-1">
+      <main className="flex-1 relative z-10">
         <Hero
           t={t}
           searchQuery={searchQuery}
@@ -125,6 +126,7 @@ export default function Home() {
           t={t}
           onViewDetails={setSelectedProduct}
           onUnlock={handleUnlockNutrition}
+          onRetry={() => executeSearch(searchQuery)}
         />
       </main>
 

@@ -14,5 +14,12 @@
   "protein": "Proteine",
   "salt": "Salz",
   "noProducts": "Keine Produkte gefunden",
-  "error": "Etwas ist schief gelaufen"
+  "error": "Etwas ist schief gelaufen",
+  "discoverFoodTitleLine1": "Entdecke, was wirklich",
+  "discoverFoodTitleLine2": "in deinem Essen steckt.",
+  "searchSmarter": "Intelligenter suchen",
+  "searchSubtitle": "Finde abgepackte Lebensmittel und entdecke ihre Nährwerte.",
+  "searchButton": "Suchen",
+  "errorTitle": "Die Suche ist vorübergehend nicht verfügbar",
+  "tryAgain": "Erneut versuchen"
 }

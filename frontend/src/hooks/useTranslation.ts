@@ -5,14 +5,14 @@ import de from "../messages/de.json";
 import fr from "../messages/fr.json";
 import { SupportedLanguage } from "../types";
 
-const dictionaries: Record<SupportedLanguage, typeof en> = { en, nl, de, fr };
+const dictionaries: Record<string, Record<string, string>> = { en, nl, de, fr };
 
 export function useTranslation(defaultLang: SupportedLanguage = "en") {
   const [lang, setLang] = useState<SupportedLanguage>(defaultLang);
 
   const t = (key: string) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (dictionaries[lang] as any)[key] || (dictionaries["en"] as any)[key] || key;
+    return (dictionaries[lang] as any)[key] || (dictionaries["en"] as any)[key] || "";
   };
 
   return { t, lang, setLang };

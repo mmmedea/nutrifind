@@ -14,5 +14,12 @@
   "protein": "Eiwitten",
   "salt": "Zout",
   "noProducts": "Geen producten gevonden",
-  "error": "Er is iets misgegaan"
+  "error": "Er is iets misgegaan",
+  "discoverFoodTitleLine1": "Ontdek wat er echt",
+  "discoverFoodTitleLine2": "in je eten zit.",
+  "searchSmarter": "Slimmer zoeken",
+  "searchSubtitle": "Vind verpakte voedingsmiddelen en ontdek hun voedingswaarde.",
+  "searchButton": "Zoeken",
+  "errorTitle": "Zoeken is tijdelijk niet beschikbaar",
+  "tryAgain": "Opnieuw proberen"
 }

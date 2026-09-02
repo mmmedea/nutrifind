@@ -14,5 +14,12 @@
   "protein": "Protéines",
   "salt": "Sel",
   "noProducts": "Aucun produit trouvé",
-  "error": "Une erreur s'est produite"
+  "error": "Une erreur s'est produite",
+  "discoverFoodTitleLine1": "Découvrez ce qu'il y a vraiment",
+  "discoverFoodTitleLine2": "dans vos aliments.",
+  "searchSmarter": "Recherche intelligente",
+  "searchSubtitle": "Trouvez des aliments emballés et explorez leurs informations nutritionnelles.",
+  "searchButton": "Rechercher",
+  "errorTitle": "La recherche est temporairement indisponible",
+  "tryAgain": "Réessayer"
 }
