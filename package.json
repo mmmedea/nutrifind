@@ -1,0 +1,10 @@
+{
+  "name": "nutrifind",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev:backend": "npm --prefix backend run dev",
+    "test": "npm --prefix backend run test"
+  }
+}
