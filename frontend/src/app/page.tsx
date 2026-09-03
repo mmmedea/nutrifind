@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Header } from "../components/Header";
 import { Hero } from "../components/Hero";
 import { ProductList } from "../components/ProductList";
@@ -22,7 +22,10 @@ export default function Home() {
   
   const [selectedProduct, setSelectedProduct] = useState<ProductSearchResult | null>(null);
   const [subscriptionStatus, setSubscriptionStatus] = useState<"ACTIVE" | "INACTIVE">("INACTIVE");
-  const [isRedirecting, setIsRedirecting] = useState(false);
+  const [redirectingId, setRedirectingId] = useState<string | null>(null);
+  const [checkoutErrorId, setCheckoutErrorId] = useState<string | null>(null);
+
+  const searchControllerRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
     fetchRecentSearches();
@@ -49,13 +52,19 @@ export default function Home() {
   const executeSearch = async (query: string) => {
     if (!query.trim()) return;
     
+    searchControllerRef.current?.abort();
+    const controller = new AbortController();
+    searchControllerRef.current = controller;
+
     setIsLoading(true);
     setError(null);
     setHasSearched(true);
     setSearchQuery(query);
 
     try {
-      const res = await fetch(`${API_URL}/api/products/search?q=${encodeURIComponent(query)}&lang=${lang}`);
+      const res = await fetch(`${API_URL}/api/products/search?q=${encodeURIComponent(query)}&lang=${lang}`, {
+        signal: controller.signal
+      });
       const data = await res.json();
       
       if (!res.ok) {
@@ -70,10 +79,15 @@ export default function Home() {
       }
       
       fetchRecentSearches();
-    } catch (err) {
+    } catch (err: any) {
+      if (err instanceof DOMException && err.name === "AbortError") {
+        return; // Ignore aborts gracefully
+      }
       setError(err instanceof Error ? err.message : "An unexpected error occurred");
     } finally {
-      setIsLoading(false);
+      if (searchControllerRef.current === controller) {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -82,19 +96,47 @@ export default function Home() {
     executeSearch(searchQuery);
   };
 
-  const handleUnlockNutrition = async () => {
-    setIsRedirecting(true);
+  const handleUnlockNutrition = async (productId: string) => {
+    if (redirectingId) return;
+
+    setRedirectingId(productId);
+    setCheckoutErrorId(null);
+    
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
+
     try {
-      const res = await fetch(`${API_URL}/api/subscription/checkout`, {
+      const response = await fetch(`${API_URL}/api/subscription/checkout`, {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        signal: controller.signal
       });
-      const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
+      
+      const data = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        throw new Error(
+          data?.message ||
+          data?.error ||
+          `Checkout failed (${response.status})`
+        );
       }
-    } catch (err) {
-      console.error("Checkout failed:", err);
-      setIsRedirecting(false);
+
+      if (!data?.url) {
+        throw new Error("Checkout URL was not returned.");
+      }
+
+      window.location.assign(data.url);
+    } catch (error) {
+      // Intentionally suppressing console.error of the Error object to prevent 
+      // Next.js dev server from hijacking the UI with an error overlay. 
+      // The error is handled gracefully via checkoutErrorId.
+      setCheckoutErrorId(productId);
+    } finally {
+      setRedirectingId(null);
+      clearTimeout(timeout);
     }
   };
 
@@ -127,6 +169,8 @@ export default function Home() {
           onViewDetails={setSelectedProduct}
           onUnlock={handleUnlockNutrition}
           onRetry={() => executeSearch(searchQuery)}
+          redirectingId={redirectingId}
+          checkoutErrorId={checkoutErrorId}
         />
       </main>
 
@@ -134,15 +178,6 @@ export default function Home() {
         product={selectedProduct}
         onClose={() => setSelectedProduct(null)}
       />
-
-      {/* Redirect Overlay */}
-      {isRedirecting && (
-        <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md">
-          <div className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-emerald-200 border-t-emerald-600 dark:border-emerald-900 dark:border-t-emerald-500" />
-          <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-50">Preparing secure checkout...</h2>
-          <p className="mt-2 text-zinc-500 dark:text-zinc-400">Redirecting to Stripe</p>
-        </div>
-      )}
     </>
   );
 }

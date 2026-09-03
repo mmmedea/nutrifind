@@ -46,12 +46,15 @@ export async function createCheckoutSession(req: Request, res: Response, next: N
           quantity: 1,
         },
       ],
-      success_url: `${process.env.FRONTEND_URL}/?success=true`,
-      cancel_url: `${process.env.FRONTEND_URL}/?canceled=true`,
+      success_url: `${process.env.FRONTEND_URL}/?checkout=success`,
+      cancel_url: `${process.env.FRONTEND_URL}/?checkout=cancelled`,
     });
 
     res.json({ url: session.url });
   } catch (error) {
-    next(error);
+    console.error("Stripe checkout creation failed:", error);
+    res.status(500).json({
+      error: "Unable to create checkout session.",
+    });
   }
 }

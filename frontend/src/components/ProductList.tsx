@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { SearchX, AlertTriangle, RefreshCw } from "lucide-react";
+import { SearchX, AlertTriangle, RefreshCw, Search } from "lucide-react";
 import { ProductCard } from "./ProductCard";
 import { ProductSearchResult } from "../types";
 
@@ -13,8 +13,10 @@ interface ProductListProps {
   hasSearched: boolean;
   t: (key: string) => string;
   onViewDetails: (product: ProductSearchResult) => void;
-  onUnlock: () => void;
+  onUnlock: (productId: string) => void;
   onRetry: () => void;
+  redirectingId: string | null;
+  checkoutErrorId: string | null;
 }
 
 const containerVariants = {
@@ -40,11 +42,15 @@ export function ProductList({
   onViewDetails,
   onUnlock,
   onRetry,
+  redirectingId,
+  checkoutErrorId,
 }: ProductListProps) {
+  const showInitialSkeleton = isLoading && products.length === 0;
+
   return (
     <div className="mx-auto max-w-7xl px-4 pb-24">
       <AnimatePresence mode="wait">
-        {isLoading && (
+        {showInitialSkeleton && (
           <motion.div
             key="loading"
             initial={{ opacity: 0 }}
@@ -65,7 +71,7 @@ export function ProductList({
           </motion.div>
         )}
 
-        {!isLoading && error && (
+        {!isLoading && error && products.length === 0 && (
           <motion.div
             key="error"
             initial={{ opacity: 0, y: 10 }}
@@ -77,7 +83,7 @@ export function ProductList({
               <AlertTriangle className="h-8 w-8" strokeWidth={1.5} />
             </div>
             <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50">
-              {t("errorTitle") || "Search is temporarily unavailable"}
+               {error === "Product search rate limit reached. Please wait a moment before searching again." ? "Search limit reached" : (t("errorTitle") || "Search is temporarily unavailable")}
             </h3>
             <p className="mt-3 max-w-sm text-zinc-500 dark:text-zinc-400">
               {error === "Product service is temporarily unavailable."
@@ -88,7 +94,7 @@ export function ProductList({
               onClick={onRetry}
               className="mt-6 flex items-center justify-center gap-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-5 py-2.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 transition-all hover:bg-zinc-50 dark:hover:bg-zinc-800 active:scale-[0.98]"
             >
-              <RefreshCw className={`h-4 w-4 ${isLoading ? "animate-spin" : ""}`} />
+              <RefreshCw className="h-4 w-4" />
               {t("tryAgain") || "Try again"}
             </button>
           </motion.div>
@@ -120,7 +126,9 @@ export function ProductList({
             exit={{ opacity: 0 }}
             className="flex flex-col items-center justify-center py-20 text-center"
           >
-            <div className="mb-4 text-5xl">🥗</div>
+            <div className="mb-4 rounded-full bg-zinc-100 dark:bg-zinc-800 p-4 text-zinc-400">
+              <Search className="h-8 w-8" />
+            </div>
             <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-50">Ready to explore?</h3>
             <p className="mt-2 max-w-md text-zinc-500 dark:text-zinc-400">
               Search for a packaged food above to see products from around the world.
@@ -128,24 +136,40 @@ export function ProductList({
           </motion.div>
         )}
 
-        {!isLoading && !error && products.length > 0 && (
+        {products.length > 0 && (
           <motion.div
             key="results"
             variants={containerVariants}
             initial="hidden"
             animate="show"
-            className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
           >
-            {products.map((product) => (
-              <motion.div key={product.id} variants={itemVariants}>
-                <ProductCard
-                  product={product}
-                  t={t}
-                  onViewDetails={onViewDetails}
-                  onUnlock={onUnlock}
-                />
-              </motion.div>
-            ))}
+            {error && (
+              <div className="mb-8 mx-auto max-w-xl flex items-center justify-between rounded-2xl border border-red-500/10 bg-red-500/[0.03] px-6 py-4">
+                <div className="flex items-center gap-3 text-red-500/80">
+                  <AlertTriangle className="h-5 w-5" />
+                  <span className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
+                    Couldn't refresh results. Showing previous results.
+                  </span>
+                </div>
+                <button onClick={onRetry} className="text-sm font-medium hover:underline flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
+                  Retry
+                </button>
+              </div>
+            )}
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {products.map((product) => (
+                <motion.div key={product.id} variants={itemVariants} className="h-full">
+                  <ProductCard
+                    product={product}
+                    t={t}
+                    onViewDetails={onViewDetails}
+                    onUnlock={() => onUnlock(product.id)}
+                    isRedirecting={redirectingId === product.id}
+                    checkoutError={checkoutErrorId === product.id}
+                  />
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

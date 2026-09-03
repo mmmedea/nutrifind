@@ -97,11 +97,12 @@ export function Hero({
             {recentSearches.map((query, i) => (
               <button
                 key={i}
+                disabled={isSearching}
                 onClick={() => onRecentClick(query)}
-                className="flex items-center gap-1.5 rounded-full border border-black/5 dark:border-white/5 bg-white dark:bg-zinc-800 px-3 py-1.5 transition-colors hover:border-emerald-500 hover:bg-emerald-50 hover:text-emerald-700 dark:hover:border-emerald-500/50 dark:hover:bg-emerald-950/30 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                className="flex items-center gap-1.5 rounded-full border border-black/5 dark:border-white/5 bg-white dark:bg-zinc-800 px-3 py-1.5 transition-colors hover:border-emerald-500 hover:bg-emerald-50 hover:text-emerald-700 dark:hover:border-emerald-500/50 dark:hover:bg-emerald-950/30 dark:hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 disabled:opacity-50 disabled:pointer-events-none"
                 aria-label={`Search again for ${query}`}
               >
-                <span className="text-[10px]">↻</span>
+                <span className="text-[10px]">🔍</span>
                 {query.charAt(0).toUpperCase() + query.slice(1)}
               </button>
             ))}
