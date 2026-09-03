@@ -1,5 +1,14 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import request from "supertest";
+import prisma from "../src/utils/prisma";
+
+// Reset demo user status before each test
+beforeEach(async () => {
+  await prisma.user.updateMany({
+    where: { email: "demo@example.com" },
+    data: { subscriptionStatus: "INACTIVE" },
+  });
+});
 import app from "../src/app";
 import { OpenFoodFactsService } from "../src/services/openFoodFacts.service";
 

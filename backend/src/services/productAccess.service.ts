@@ -1,30 +1,28 @@
 import { ProductSearchResult } from "../types/product";
 import { SubscriptionStatus } from "@prisma/client";
+import { hasPremiumAccess } from "../utils/premiumAccess";
 
 export class ProductAccessService {
   /**
    * Enforces nutrition access control based on user subscription status.
-   * If not ACTIVE, nutrition data is stripped and nutritionLocked is set to true.
+   * ACTIVE and TRIALING => nutrition visible, nutritionLocked false.
+   * All other statuses => nutrition null, nutritionLocked true.
    */
   public static enforceNutritionAccess(
     products: ProductSearchResult[],
     status: SubscriptionStatus
   ): ProductSearchResult[] {
-    const isSubscribed = status === SubscriptionStatus.ACTIVE;
-
+    const hasAccess = status === SubscriptionStatus.ACTIVE || status === SubscriptionStatus.TRIALING;
     return products.map(product => {
-      if (!isSubscribed) {
+      if (!hasAccess) {
         return {
           ...product,
           nutrition: null,
           nutritionLocked: true,
         };
       }
-      
-      return {
-        ...product,
-        nutritionLocked: false,
-      };
+      // Ensure nutritionLocked is false for accessible users
+      return { ...product, nutrition: product.nutrition, nutritionLocked: false };
     });
   }
 }

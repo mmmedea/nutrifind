@@ -79,7 +79,7 @@ export default function Home() {
       }
       
       fetchRecentSearches();
-    } catch (err: any) {
+    } catch (err: unknown) {
       if (err instanceof DOMException && err.name === "AbortError") {
         return; // Ignore aborts gracefully
       }
@@ -129,15 +129,15 @@ export default function Home() {
       }
 
       window.location.assign(data.url);
-    } catch (error) {
-      // Intentionally suppressing console.error of the Error object to prevent 
-      // Next.js dev server from hijacking the UI with an error overlay. 
-      // The error is handled gracefully via checkoutErrorId.
-      setCheckoutErrorId(productId);
-    } finally {
-      setRedirectingId(null);
-      clearTimeout(timeout);
-    }
+      } catch {
+        // Intentionally suppressing console.error of the Error object to prevent
+        // Next.js dev server from hijacking the UI with an error overlay.
+        // The error is handled gracefully via checkoutErrorId.
+        setCheckoutErrorId(productId);
+      } finally {
+        setRedirectingId(null);
+        clearTimeout(timeout);
+      }
   };
 
   return (

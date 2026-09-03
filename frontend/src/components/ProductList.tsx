@@ -148,7 +148,7 @@ export function ProductList({
                 <div className="flex items-center gap-3 text-red-500/80">
                   <AlertTriangle className="h-5 w-5" />
                   <span className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
-                    Couldn't refresh results. Showing previous results.
+                     {"Couldn't refresh results. Showing your previous results."}
                   </span>
                 </div>
                 <button onClick={onRetry} className="text-sm font-medium hover:underline flex items-center gap-2 text-zinc-700 dark:text-zinc-300">

@@ -1,8 +1,12 @@
 import Stripe from "stripe";
-import "dotenv/config";
+import { getEnv } from "../config/env";
 
-const stripeSecret = process.env.STRIPE_SECRET_KEY || "sk_test_mock";
+let stripeClient: Stripe | null = null;
 
-export const stripe = new Stripe(stripeSecret, {
-  apiVersion: "2024-06-20" as any, // Bypass TS error for specific Stripe package version
-});
+export function getStripe(): Stripe {
+  if (!stripeClient) {
+    const env = getEnv();
+    stripeClient = new Stripe(env.stripeSecret);
+  }
+  return stripeClient;
+}
