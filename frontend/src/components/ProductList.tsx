@@ -86,7 +86,9 @@ export function ProductList({
                {error === "Product search rate limit reached. Please wait a moment before searching again." ? t('searchLimitReached') : (t("errorTitle") || "Search is temporarily unavailable")}
             </h3>
             <p className="mt-3 max-w-sm text-zinc-500 dark:text-zinc-400">
-              {error === "Product service is temporarily unavailable."
+              {error === "Product search rate limit reached. Please wait a moment before searching again."
+                ? t("rateLimitDetail")
+                : error === "Product service is temporarily unavailable."
                 ? (t("serviceUnavailable") || "We couldn't reach the product database right now. Please try again in a moment.")
                 : error}
             </p>

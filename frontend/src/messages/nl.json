@@ -38,5 +38,6 @@
   "tryAnotherSearch": "We konden niets vinden dat bij je zoekopdracht past. Probeer een ander product of merk.",
   "refreshError": "Kon resultaten niet vernieuwen. Vorige resultaten worden getoond.",
   "searchPrompt": "Zoek een verpakt voedsel hierboven om producten van over de hele wereld te bekijken.",
-  "serviceUnavailable": "We konden de productdatabase momenteel niet bereiken. Probeer het later opnieuw."
+  "serviceUnavailable": "We konden de productdatabase momenteel niet bereiken. Probeer het later opnieuw.",
+  "rateLimitDetail": "Te veel zoekopdrachten in korte tijd. Wacht even voordat je het opnieuw probeert."
 }

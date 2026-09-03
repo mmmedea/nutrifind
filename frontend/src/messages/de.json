@@ -38,5 +38,6 @@
   "detailedNutrition": "Detaillierte Nährwerte",
   "noProductsFound": "Keine Produkte gefunden",
   "tryAnotherSearch": "Wir konnten nichts finden, das zu Ihrer Suche passt. Versuchen Sie ein anderes Produkt oder eine andere Marke.",
-  "serviceUnavailable": "Wir konnten die Produktdatenbank momentan nicht erreichen. Bitte versuchen Sie es später noch einmal."
+  "serviceUnavailable": "Wir konnten die Produktdatenbank momentan nicht erreichen. Bitte versuchen Sie es später noch einmal.",
+  "rateLimitDetail": "Zu viele Suchanfragen in kurzer Zeit. Bitte warten Sie einen Moment, bevor Sie es erneut versuchen."
 }

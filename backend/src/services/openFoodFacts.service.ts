@@ -135,7 +135,7 @@ export class OpenFoodFactsService implements ProductSearchProvider {
     const finalName = localizedName ?? englishName ?? genericName ?? "Unnamed product";
 
     const id = product.code || "unknown";
-    const brand = product.brands || "Unknown brand";
+    const brand = product.brands || "";
     const imageUrl = product.image_front_url || product.image_url || null;
 
     const nutriments = product.nutriments || {};

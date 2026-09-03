@@ -8,12 +8,10 @@ import { ProductSearchResult } from "../types";
 interface ProductModalProps {
   product: ProductSearchResult | null;
   onClose: () => void;
+  t: (key: string) => string;
 }
 
-import { useTranslation } from "../hooks/useTranslation";
-
-export function ProductModal({ product, onClose }: ProductModalProps) {
-  const { t } = useTranslation();
+export function ProductModal({ product, onClose, t }: ProductModalProps) {
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -88,16 +86,16 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
               {!product.nutritionLocked && product.nutrition && (
                 <div>
                   <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-4 pb-2 border-b border-zinc-100 dark:border-zinc-800">
-                    Nutrition per 100g
+                    {t("nutritionPer100g")}
                   </h4>
                   
                   <div className="space-y-4">
-                    <NutritionRow label="Energy" value={product.nutrition.energyKcal} unit="kcal" max={800} />
-                    <NutritionRow label="Protein" value={product.nutrition.protein} unit="g" max={50} />
-                    <NutritionRow label="Fat" value={product.nutrition.fat} unit="g" max={100} />
-                    <NutritionRow label="Carbohydrates" value={product.nutrition.carbohydrates} unit="g" max={100} />
-                    <NutritionRow label="Sugars" value={product.nutrition.sugars} unit="g" max={100} />
-                    <NutritionRow label="Salt" value={product.nutrition.salt} unit="g" max={5} />
+                    <NutritionRow label={t("energy")} value={product.nutrition.energyKcal} unit="kcal" max={800} />
+                    <NutritionRow label={t("protein")} value={product.nutrition.protein} unit="g" max={50} />
+                    <NutritionRow label={t("fat")} value={product.nutrition.fat} unit="g" max={100} />
+                    <NutritionRow label={t("carbohydrates")} value={product.nutrition.carbohydrates} unit="g" max={100} />
+                    <NutritionRow label={t("sugars")} value={product.nutrition.sugars} unit="g" max={100} />
+                    <NutritionRow label={t("salt")} value={product.nutrition.salt} unit="g" max={5} />
                   </div>
                 </div>
               )}

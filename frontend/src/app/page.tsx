@@ -199,6 +199,7 @@ function HomeContent() {
       <ProductModal
         product={selectedProduct}
         onClose={() => setSelectedProduct(null)}
+        t={t}
       />
     </>
   );
