@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { motion } from "motion/react";
+import { useTranslation } from "../hooks/useTranslation";
 import { ThemeToggle } from "./ThemeToggle";
 import { SupportedLanguage } from "../types";
 
@@ -14,7 +15,9 @@ interface HeaderProps {
 const languages: SupportedLanguage[] = ["en", "nl", "de", "fr"];
 
 export function Header({ lang, setLang, subscriptionStatus }: HeaderProps) {
+  const { t } = useTranslation();
   return (
+
     <motion.header
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
@@ -29,7 +32,7 @@ export function Header({ lang, setLang, subscriptionStatus }: HeaderProps) {
       </div>
 
       <div className="flex items-center gap-4 sm:gap-6">
-        <div className="hidden sm:flex items-center rounded-full bg-black/5 dark:bg-white/5 p-1">
+        <div className="flex items-center rounded-full bg-black/5 dark:bg-white/5 p-1">
           {languages.map((l) => (
             <button
               key={l}
@@ -53,7 +56,7 @@ export function Header({ lang, setLang, subscriptionStatus }: HeaderProps) {
         {subscriptionStatus === "ACTIVE" && (
           <div className="flex items-center gap-1.5 text-sm font-medium text-amber-600 dark:text-amber-400">
             <span>◇</span>
-            <span>Premium</span>
+            <span>{t('premium')}</span>
           </div>
         )}
 

@@ -1,16 +1,17 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { Header } from "../components/Header";
 import { Hero } from "../components/Hero";
 import { ProductList } from "../components/ProductList";
 import { ProductModal } from "../components/ProductModal";
 import { useTranslation } from "../hooks/useTranslation";
-import { ProductSearchResult } from "../types";
+import { ProductSearchResult, SupportedLanguage } from "../types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
-export default function Home() {
+function HomeContent() {
   const { t, lang, setLang } = useTranslation("en");
   
   const [searchQuery, setSearchQuery] = useState("");
@@ -27,9 +28,30 @@ export default function Home() {
 
   const searchControllerRef = useRef<AbortController | null>(null);
 
+  const fetchSubscriptionStatus = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/subscription/status`);
+      if (!response.ok) return;
+      const data = await response.json();
+      if (data?.active !== undefined) {
+        setSubscriptionStatus(data.active ? "ACTIVE" : "INACTIVE");
+      }
+    } catch {
+      // Silently ignore errors
+    }
+  };
+
+  // Refresh subscription status after successful Stripe checkout
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    if (searchParams?.get('checkout') === 'success') {
+      void fetchSubscriptionStatus();
+    }
+  }, [searchParams]);
+
   useEffect(() => {
     fetchRecentSearches();
-    // In a real app with auth, we'd fetch the user's subscription status on load here as well
+    void fetchSubscriptionStatus();
   }, []);
 
   const fetchRecentSearches = async () => {
@@ -49,9 +71,7 @@ export default function Home() {
     }
   };
 
-  const executeSearch = async (query: string) => {
-    if (!query.trim()) return;
-    
+  const executeSearch = async (query: string, searchLang: SupportedLanguage = lang) => {
     searchControllerRef.current?.abort();
     const controller = new AbortController();
     searchControllerRef.current = controller;
@@ -62,7 +82,7 @@ export default function Home() {
     setSearchQuery(query);
 
     try {
-      const res = await fetch(`${API_URL}/api/products/search?q=${encodeURIComponent(query)}&lang=${lang}`, {
+      const res = await fetch(`${API_URL}/api/products/search?q=${encodeURIComponent(query)}&lang=${searchLang}`, {
         signal: controller.signal
       });
       const data = await res.json();
@@ -91,9 +111,15 @@ export default function Home() {
     }
   };
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    executeSearch(searchQuery);
+  const handleSearch = (query: string) => {
+    void executeSearch(query);
+  };
+
+  const handleLangChange = (newLang: SupportedLanguage) => {
+    setLang(newLang);
+    if (hasSearched && searchQuery.trim()) {
+      void executeSearch(searchQuery, newLang);
+    }
   };
 
   const handleUnlockNutrition = async (productId: string) => {
@@ -145,7 +171,7 @@ export default function Home() {
       <div className="pointer-events-none absolute inset-0 hidden dark:block bg-[radial-gradient(circle_at_50%_0%,rgba(16,185,129,0.08),transparent_35%)] z-0" />
       <Header 
         lang={lang} 
-        setLang={setLang} 
+        setLang={handleLangChange} 
         subscriptionStatus={subscriptionStatus} 
       />
       
@@ -179,5 +205,13 @@ export default function Home() {
         onClose={() => setSelectedProduct(null)}
       />
     </>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HomeContent />
+    </Suspense>
   );
 }

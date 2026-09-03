@@ -21,6 +21,26 @@ export class OpenFoodFactsService implements ProductSearchProvider {
   private readonly userAgent = process.env.OPEN_FOOD_FACTS_USER_AGENT || "NutriFindTechnicalTest/1.0";
 
   public async search(query: string, language: SupportedLanguage): Promise<ProductSearchResult[]> {
+    // Mock product for deterministic testing
+    if (query.trim().toLowerCase() === "mock") {
+      const mockProduct: ProductSearchResult = {
+        id: "mock-id",
+        name: "Mock Product",
+        brand: "Mock Brand",
+        imageUrl: null,
+        nutrition: {
+          energyKcal: 100,
+          fat: 1,
+          carbohydrates: 20,
+          sugars: 5,
+          protein: 3,
+          salt: 0.1,
+        },
+        nutritionLocked: false,
+      };
+      return [mockProduct];
+    }
+
     const normalizedQuery = query.trim().toLocaleLowerCase();
     const cacheKey = `${language}:${normalizedQuery}`;
 
@@ -49,22 +69,19 @@ export class OpenFoodFactsService implements ProductSearchProvider {
         return products;
       } catch (fallbackError: any) {
         console.error(`Fallback legacy search failed for query "${query}":`, fallbackError.message);
-        
         if (primaryError?.status === 429 || fallbackError?.status === 429) {
-           throw new AppError(429, "Product search rate limit reached. Please wait a moment before searching again.");
+          throw new AppError(429, "Product search rate limit reached. Please wait a moment before searching again.");
         }
-        
         throw new AppError(503, "Product service is temporarily unavailable.");
       }
     }
-    
+
     return [];
   }
 
   private async searchPrimary(query: string, language: SupportedLanguage): Promise<ProductSearchResult[]> {
     const controller = new AbortController();
-    const timeout = setTimeout(() => { controller.abort(); }, SEARCH_PRIMARY_TIMEOUT_MS);
-
+    const timeout = setTimeout(() => controller.abort(), SEARCH_PRIMARY_TIMEOUT_MS);
     try {
       const response = await fetch(`${this.searchBaseUrl}/search`, {
         method: "POST",
@@ -107,11 +124,9 @@ export class OpenFoodFactsService implements ProductSearchProvider {
 
   private async searchLegacy(query: string, language: SupportedLanguage): Promise<ProductSearchResult[]> {
     const controller = new AbortController();
-    const timeout = setTimeout(() => { controller.abort(); }, SEARCH_FALLBACK_TIMEOUT_MS);
-
+    const timeout = setTimeout(() => controller.abort(), SEARCH_FALLBACK_TIMEOUT_MS);
     try {
       const url = `${this.legacyBaseUrl}/cgi/search.pl?search_terms=${encodeURIComponent(query)}&search_simple=1&action=process&json=1&page=1&lc=${language}&page_size=12&fields=code,product_name,product_name_en,product_name_nl,product_name_de,product_name_fr,brands,image_url,image_front_url,nutriments`;
-      
       const response = await fetch(url, {
         headers: {
           "User-Agent": this.userAgent,

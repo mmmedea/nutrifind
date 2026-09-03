@@ -41,7 +41,7 @@ export function ProductCard({ product, t, onViewDetails, onUnlock, isRedirecting
         ) : (
           <div className="relative z-10 flex h-full w-full flex-col items-center justify-center bg-neutral-50 dark:bg-zinc-950 text-zinc-500 dark:text-zinc-600">
             <ImageOff className="h-8 w-8" />
-            <span className="mt-2 text-xs">No product image</span>
+            <span className="mt-2 text-xs">{t("noProductImage")}</span>
           </div>
         )}
       </div>
@@ -52,7 +52,7 @@ export function ProductCard({ product, t, onViewDetails, onUnlock, isRedirecting
           {product.name}
         </h3>
         <p className="mt-1 truncate text-sm text-zinc-500 dark:text-zinc-400">
-          {product.brand || "Brand unavailable"}
+          {product.brand || t('brandUnavailable')}
         </p>
 
         <div className="mt-auto pt-6">
@@ -84,12 +84,12 @@ export function ProductCard({ product, t, onViewDetails, onUnlock, isRedirecting
                 {isRedirecting ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin" />
-                    Preparing checkout...
+                    {t('preparingCheckout')}
                   </>
                 ) : (
                   <>
                     <Lock className="h-4 w-4" />
-                    {t("unlockNutrition") || "Unlock Nutrition"}
+                    {t('unlockNutrition')}
                   </>
                 )}
               </button>

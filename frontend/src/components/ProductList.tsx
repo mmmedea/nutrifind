@@ -83,7 +83,7 @@ export function ProductList({
               <AlertTriangle className="h-8 w-8" strokeWidth={1.5} />
             </div>
             <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50">
-               {error === "Product search rate limit reached. Please wait a moment before searching again." ? "Search limit reached" : (t("errorTitle") || "Search is temporarily unavailable")}
+               {error === "Product search rate limit reached. Please wait a moment before searching again." ? t('searchLimitReached') : (t("errorTitle") || "Search is temporarily unavailable")}
             </h3>
             <p className="mt-3 max-w-sm text-zinc-500 dark:text-zinc-400">
               {error === "Product service is temporarily unavailable."
@@ -129,10 +129,10 @@ export function ProductList({
             <div className="mb-4 rounded-full bg-zinc-100 dark:bg-zinc-800 p-4 text-zinc-400">
               <Search className="h-8 w-8" />
             </div>
-            <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-50">Ready to explore?</h3>
-            <p className="mt-2 max-w-md text-zinc-500 dark:text-zinc-400">
-              Search for a packaged food above to see products from around the world.
-            </p>
+            <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-50">{t('readyToExplore') || "Ready to explore?"}</h3>
+          <p className="mt-2 max-w-md text-zinc-500 dark:text-zinc-400">
+            {t('searchPrompt') || "Search for a packaged food above to see products from around the world."}
+          </p>
           </motion.div>
         )}
 

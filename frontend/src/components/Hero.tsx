@@ -8,7 +8,7 @@ interface HeroProps {
   t: (key: string) => string;
   searchQuery: string;
   setSearchQuery: (q: string) => void;
-  onSearch: (e: React.FormEvent) => void;
+  onSearch: (query: string) => void;
   isSearching: boolean;
   recentSearches: string[];
   onRecentClick: (query: string) => void;
@@ -64,7 +64,7 @@ export function Hero({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          onSubmit={onSearch}
+          onSubmit={(e) => { e.preventDefault(); onSearch(searchQuery); }}
           className="relative mx-auto flex w-full max-w-2xl items-center rounded-2xl bg-white p-2 shadow-sm border border-zinc-200 dark:bg-zinc-900/80 dark:border-zinc-800 focus-within:border-emerald-500 focus-within:ring-4 focus-within:ring-emerald-500/10 transition-all"
         >
           <div className="pl-4 pr-2 text-zinc-400">

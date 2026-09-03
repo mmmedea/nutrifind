@@ -1,6 +1,6 @@
 {
   "search": "Rechercher",
-  "searchPlaceholder": "Rechercher des produits emballés...",
+  "searchPlaceholder": "Rechercher des produits...",
   "recentSearches": "Recherches récentes",
   "nutrition": "Valeurs nutritionnelles",
   "nutritionPer100g": "Valeurs nutritionnelles pour 100 g",
@@ -21,5 +21,21 @@
   "searchSubtitle": "Trouvez des aliments emballés et explorez leurs informations nutritionnelles.",
   "searchButton": "Rechercher",
   "errorTitle": "La recherche est temporairement indisponible",
-  "tryAgain": "Réessayer"
+  "tryAgain": "Réessayer",
+  "brandUnavailable": "Marque indisponible",
+  "noProductImage": "Pas d'image du produit",
+  "preparingCheckout": "Préparation du paiement...",
+  "checkoutError": "Nous n'avons pas pu démarrer le paiement.",
+  "checkoutErrorDetail": "Veuillez réessayer.",
+  "nutritionAvailable": "Valeurs nutritionnelles disponibles",
+  "searchLimitReached": "Limite de recherche atteinte",
+  "readyToExplore": "Prêt à explorer ?",
+  "retry": "Réessayer",
+  "viewDetails": "Voir les détails",
+  "premium": "Premium",
+  "detailedNutrition": "Valeurs nutritionnelles détaillées",
+  "noProductsFound": "Aucun produit trouvé",
+  "tryAnotherSearch": "Nous n'avons rien trouvé correspondant à votre recherche. Essayez un autre produit ou une autre marque.",
+  "refreshError": "Impossible d'actualiser les résultats. Affichage des résultats précédents.",
+  "searchPrompt": "Recherchez un produit emballé ci-dessus pour voir les produits du monde entier."
 }

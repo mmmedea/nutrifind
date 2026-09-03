@@ -21,5 +21,21 @@
   "searchSubtitle": "Finde abgepackte Lebensmittel und entdecke ihre Nährwerte.",
   "searchButton": "Suchen",
   "errorTitle": "Die Suche ist vorübergehend nicht verfügbar",
-  "tryAgain": "Erneut versuchen"
+  "tryAgain": "Erneut versuchen",
+  "brandUnavailable": "Marke nicht verfügbar",
+  "noProductImage": "Kein Produktbild",
+  "preparingCheckout": "Checkout wird vorbereitet...",
+  "checkoutError": "Wir konnten den Checkout nicht starten.",
+  "checkoutErrorDetail": "Bitte versuchen Sie es erneut.",
+  "nutritionAvailable": "Nährwertangaben verfügbar",
+  "searchLimitReached": "Suchlimit erreicht",
+  "readyToExplore": "Bereit zum Erkunden?",
+  "retry": "Erneut versuchen",
+  "viewDetails": "Details anzeigen",
+  "premium": "Premium",
+  "refreshError": "Ergebnisse konnten nicht aktualisiert werden. Zeige vorherige Ergebnisse.",
+  "searchPrompt": "Suchen Sie ein verpacktes Lebensmittel oben, um Produkte aus der ganzen Welt zu sehen.",
+  "detailedNutrition": "Detaillierte Nährwerte",
+  "noProductsFound": "Keine Produkte gefunden",
+  "tryAnotherSearch": "Wir konnten nichts finden, das zu Ihrer Suche passt. Versuchen Sie ein anderes Produkt oder eine andere Marke."
 }

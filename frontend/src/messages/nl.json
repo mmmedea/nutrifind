@@ -21,5 +21,21 @@
   "searchSubtitle": "Vind verpakte voedingsmiddelen en ontdek hun voedingswaarde.",
   "searchButton": "Zoeken",
   "errorTitle": "Zoeken is tijdelijk niet beschikbaar",
-  "tryAgain": "Opnieuw proberen"
+  "tryAgain": "Opnieuw proberen",
+  "brandUnavailable": "Merk niet beschikbaar",
+  "noProductImage": "Geen productafbeelding",
+  "preparingCheckout": "Voorbereiden van checkout...",
+  "checkoutError": "We konden checkout niet starten.",
+  "checkoutErrorDetail": "Probeer het opnieuw.",
+  "nutritionAvailable": "Voedingswaarden beschikbaar",
+  "searchLimitReached": "Zoeklimiet bereikt",
+  "readyToExplore": "Klaar om te verkennen?",
+  "retry": "Opnieuw",
+  "viewDetails": "Bekijk details",
+  "premium": "Premium",
+  "detailedNutrition": "Gedetailleerde voedingswaarde",
+  "noProductsFound": "Geen producten gevonden",
+  "tryAnotherSearch": "We konden niets vinden dat bij je zoekopdracht past. Probeer een ander product of merk.",
+  "refreshError": "Kon resultaten niet vernieuwen. Vorige resultaten worden getoond.",
+  "searchPrompt": "Zoek een verpakt voedsel hierboven om producten van over de hele wereld te bekijken."
 }

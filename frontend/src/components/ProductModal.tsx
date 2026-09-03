@@ -10,7 +10,10 @@ interface ProductModalProps {
   onClose: () => void;
 }
 
+import { useTranslation } from "../hooks/useTranslation";
+
 export function ProductModal({ product, onClose }: ProductModalProps) {
+  const { t } = useTranslation();
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -79,7 +82,7 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
 
               <div className="mb-8">
                 <h3 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">{product.name}</h3>
-                <p className="text-lg text-zinc-500 dark:text-zinc-400">{product.brand || "Unknown Brand"}</p>
+                <p className="text-lg text-zinc-500 dark:text-zinc-400">{product.brand || t('brandUnavailable')}</p>
               </div>
 
               {!product.nutritionLocked && product.nutrition && (

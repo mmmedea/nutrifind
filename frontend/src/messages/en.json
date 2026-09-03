@@ -21,5 +21,22 @@
   "searchSubtitle": "Find packaged foods and explore their nutritional information.",
   "searchButton": "Search",
   "errorTitle": "Search is temporarily unavailable",
-  "tryAgain": "Try again"
+  "tryAgain": "Try again",
+  "brandUnavailable": "Brand unavailable",
+  "noProductImage": "No product image",
+  "preparingCheckout": "Preparing checkout...",
+  "checkoutError": "We couldn't start checkout.",
+  "checkoutErrorDetail": "Please try again.",
+  "nutritionAvailable": "Nutrition available",
+  "searchLimitReached": "Search limit reached",
+  "readyToExplore": "Ready to explore?",
+  "retry": "Retry",
+  "viewDetails": "View details",
+  "premium": "Premium",
+  "detailedNutrition": "Detailed Nutrition",
+  "noProductsFound": "No products found",
+  "tryAnotherSearch": "We couldn't find anything matching your search. Try another product or brand.",
+  "refreshError": "Couldn't refresh results. Showing your previous results.",
+  "searchPrompt": "Search for a packaged food above to see products from around the world."
 }
+

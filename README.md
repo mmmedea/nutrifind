@@ -86,11 +86,23 @@ NEXT_PUBLIC_API_URL=http://localhost:4000
   ```
 - **Frontend** – Lint and build serve as verification (no unit tests are defined).
 
-## Technical Decisions & Known Limitations
+
+## Technical Decisions
 - **Search Strategy** – Uses the modern Search‑a‑licious endpoint for speed and reliability; falls back to the legacy OFF `/cgi/search.pl` when the primary endpoint returns a 503.
 - **Mock Data** – No development‑time mock data is shipped. All fallback behaviour is handled at runtime.
 - **Stripe Integration** – Checkout creates a Stripe customer and subscription in test mode. Subscription status is derived from `customer.subscription.created/updated` events; `checkout.session.completed` only persists IDs.
 - **Authentication** – A single demo user is seeded; real‑world authentication is out of scope for this assessment.
 - **Linting** – The project relies on an ESLint configuration defined in `.eslintrc.cjs`. If the `npm run lint` script fails because ESLint is missing, add a minimal configuration (see technical notes).
 - **Build** – Backend compilation is verified via `npm run typecheck`. No separate build script is required.
+
+## Internationalization
+NutriFind supports English, Dutch, German, and French through a manual language selector.
+
+Interface text is stored in separate translation dictionaries (`frontend/src/messages/*.json`) and accessed via a frontend translation helper. When the user selects a language, that language code is sent to the backend with product‑search requests (`lang` query parameter). The backend prefers the Open Food Facts localized name for the selected language, falling back to English, the generic product name, and finally "Unnamed product" when no suitable name is available.
+
+## Known Limitations
+- Open Food Facts data may be incomplete or unavailable for some products.
+- Localized product names depend on translations available in Open Food Facts.
+- The application uses one fixed demo user and does not implement authentication.
+- Stripe integration runs in test mode only.
 ```
