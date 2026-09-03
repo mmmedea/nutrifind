@@ -1,5 +1,4 @@
-// backend/tests/subscriptionAndWebhook.test.ts
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import request from "supertest";
 import app from "../src/app";
 import prisma from "../src/utils/prisma";
@@ -22,6 +21,24 @@ async function resetDemoUser() {
 describe("Subscription status enforcement", () => {
   beforeEach(async () => {
     await resetDemoUser();
+    // Mock the external API
+    vi.spyOn(global, "fetch").mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        hits: [{
+          code: "mock-id",
+          product_name: "Mock Product",
+          nutriments: {
+            "energy-kcal_100g": 100,
+            fat_100g: 1,
+          }
+        }]
+      })
+    } as any);
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
   const cases = [

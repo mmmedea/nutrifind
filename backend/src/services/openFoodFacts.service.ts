@@ -21,25 +21,6 @@ export class OpenFoodFactsService implements ProductSearchProvider {
   private readonly userAgent = process.env.OPEN_FOOD_FACTS_USER_AGENT || "NutriFindTechnicalTest/1.0";
 
   public async search(query: string, language: SupportedLanguage): Promise<ProductSearchResult[]> {
-    // Mock product for deterministic testing
-    if (query.trim().toLowerCase() === "mock") {
-      const mockProduct: ProductSearchResult = {
-        id: "mock-id",
-        name: "Mock Product",
-        brand: "Mock Brand",
-        imageUrl: null,
-        nutrition: {
-          energyKcal: 100,
-          fat: 1,
-          carbohydrates: 20,
-          sugars: 5,
-          protein: 3,
-          salt: 0.1,
-        },
-        nutritionLocked: false,
-      };
-      return [mockProduct];
-    }
 
     const normalizedQuery = query.trim().toLocaleLowerCase();
     const cacheKey = `${language}:${normalizedQuery}`;

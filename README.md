@@ -92,7 +92,7 @@ NEXT_PUBLIC_API_URL=http://localhost:4000
 - **Mock Data** – No development‑time mock data is shipped. All fallback behaviour is handled at runtime.
 - **Stripe Integration** – Checkout creates a Stripe customer and subscription in test mode. Subscription status is derived from `customer.subscription.created/updated` events; `checkout.session.completed` only persists IDs.
 - **Authentication** – A single demo user is seeded; real‑world authentication is out of scope for this assessment.
-- **Linting** – The project relies on an ESLint configuration defined in `.eslintrc.cjs`. If the `npm run lint` script fails because ESLint is missing, add a minimal configuration (see technical notes).
+
 - **Build** – Backend compilation is verified via `npm run typecheck`. No separate build script is required.
 
 ## Internationalization
@@ -105,4 +105,3 @@ Interface text is stored in separate translation dictionaries (`frontend/src/mes
 - Localized product names depend on translations available in Open Food Facts.
 - The application uses one fixed demo user and does not implement authentication.
 - Stripe integration runs in test mode only.
-```
