@@ -37,5 +37,6 @@
   "noProductsFound": "Aucun produit trouvé",
   "tryAnotherSearch": "Nous n'avons rien trouvé correspondant à votre recherche. Essayez un autre produit ou une autre marque.",
   "refreshError": "Impossible d'actualiser les résultats. Affichage des résultats précédents.",
-  "searchPrompt": "Recherchez un produit emballé ci-dessus pour voir les produits du monde entier."
+  "searchPrompt": "Recherchez un produit emballé ci-dessus pour voir les produits du monde entier.",
+  "serviceUnavailable": "Nous n'avons pas pu joindre la base de données des produits pour le moment. Veuillez réessayer plus tard."
 }

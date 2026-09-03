@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { motion } from "motion/react";
-import { useTranslation } from "../hooks/useTranslation";
 import { ThemeToggle } from "./ThemeToggle";
 import { SupportedLanguage } from "../types";
 
@@ -10,12 +9,12 @@ interface HeaderProps {
   lang: SupportedLanguage;
   setLang: (lang: SupportedLanguage) => void;
   subscriptionStatus: "ACTIVE" | "INACTIVE";
+  t: (key: string) => string;
 }
 
 const languages: SupportedLanguage[] = ["en", "nl", "de", "fr"];
 
-export function Header({ lang, setLang, subscriptionStatus }: HeaderProps) {
-  const { t } = useTranslation();
+export function Header({ lang, setLang, subscriptionStatus, t }: HeaderProps) {
   return (
 
     <motion.header

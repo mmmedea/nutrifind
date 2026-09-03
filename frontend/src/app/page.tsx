@@ -93,11 +93,6 @@ function HomeContent() {
       
       setProducts(data.products || []);
       
-      // Update subscription status based on what the backend detected
-      if (data.subscriptionStatus) {
-        setSubscriptionStatus(data.subscriptionStatus);
-      }
-      
       fetchRecentSearches();
     } catch (err: unknown) {
       if (err instanceof DOMException && err.name === "AbortError") {
@@ -172,7 +167,8 @@ function HomeContent() {
       <Header 
         lang={lang} 
         setLang={handleLangChange} 
-        subscriptionStatus={subscriptionStatus} 
+        subscriptionStatus={subscriptionStatus}
+        t={t}
       />
       
       <main className="flex-1 relative z-10">

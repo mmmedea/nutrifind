@@ -12,7 +12,7 @@ type CacheEntry = {
 
 const searchCache = new Map<string, CacheEntry>();
 const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
-const SEARCH_PRIMARY_TIMEOUT_MS = 3000;
+const SEARCH_PRIMARY_TIMEOUT_MS = 8000;
 const SEARCH_FALLBACK_TIMEOUT_MS = 2000;
 
 export class OpenFoodFactsService implements ProductSearchProvider {

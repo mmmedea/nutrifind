@@ -87,7 +87,7 @@ export function ProductList({
             </h3>
             <p className="mt-3 max-w-sm text-zinc-500 dark:text-zinc-400">
               {error === "Product service is temporarily unavailable."
-                ? "We couldn't reach the product database right now. Please try again in a moment."
+                ? (t("serviceUnavailable") || "We couldn't reach the product database right now. Please try again in a moment.")
                 : error}
             </p>
             <button
@@ -148,11 +148,11 @@ export function ProductList({
                 <div className="flex items-center gap-3 text-red-500/80">
                   <AlertTriangle className="h-5 w-5" />
                   <span className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
-                     {"Couldn't refresh results. Showing your previous results."}
+                     {t('refreshError') || "Couldn't refresh results. Showing your previous results."}
                   </span>
                 </div>
                 <button onClick={onRetry} className="text-sm font-medium hover:underline flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
-                  Retry
+                  {t('retry') || "Retry"}
                 </button>
               </div>
             )}

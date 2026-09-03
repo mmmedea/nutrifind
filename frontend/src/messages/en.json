@@ -37,6 +37,6 @@
   "noProductsFound": "No products found",
   "tryAnotherSearch": "We couldn't find anything matching your search. Try another product or brand.",
   "refreshError": "Couldn't refresh results. Showing your previous results.",
-  "searchPrompt": "Search for a packaged food above to see products from around the world."
+  "searchPrompt": "Search for a packaged food above to see products from around the world.",
+  "serviceUnavailable": "We couldn't reach the product database right now. Please try again in a moment."
 }
-

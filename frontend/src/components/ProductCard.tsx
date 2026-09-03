@@ -96,7 +96,7 @@ export function ProductCard({ product, t, onViewDetails, onUnlock, isRedirecting
 
               {checkoutError && (
                 <div role="alert" className="mt-3 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-500 dark:text-red-400 text-center">
-                  {"We couldn't start checkout."}<br/>Please try again.
+                  {t('checkoutError') || "We couldn't start checkout."}<br/>{t('checkoutErrorDetail') || "Please try again."}
                 </div>
               )}
             </div>
@@ -104,18 +104,18 @@ export function ProductCard({ product, t, onViewDetails, onUnlock, isRedirecting
             <div className="rounded-2xl border border-emerald-100 dark:border-emerald-900/50 bg-emerald-50 dark:bg-emerald-950/30 p-4">
               <div className="flex items-center gap-2 mb-3 text-emerald-700 dark:text-emerald-400 font-semibold text-sm">
                 <div className="h-2 w-2 rounded-full bg-emerald-500" />
-                <span>Nutrition available</span>
+                <span>{t('nutritionAvailable') || "Nutrition available"}</span>
               </div>
               
               <div className="grid grid-cols-2 gap-4 text-sm mb-4">
                 <div>
-                  <div className="text-zinc-500 dark:text-zinc-400 text-xs">Energy</div>
+                  <div className="text-zinc-500 dark:text-zinc-400 text-xs">{t('energy') || "Energy"}</div>
                   <div className="font-medium text-zinc-900 dark:text-zinc-100">
                     {product.nutrition?.energyKcal !== undefined && product.nutrition?.energyKcal !== null ? `${product.nutrition.energyKcal} kcal` : "-"}
                   </div>
                 </div>
                 <div>
-                  <div className="text-zinc-500 dark:text-zinc-400 text-xs">Fat</div>
+                  <div className="text-zinc-500 dark:text-zinc-400 text-xs">{t('fat') || "Fat"}</div>
                   <div className="font-medium text-zinc-900 dark:text-zinc-100">
                     {product.nutrition?.fat !== undefined && product.nutrition?.fat !== null ? `${product.nutrition.fat}g` : "-"}
                   </div>
@@ -127,7 +127,7 @@ export function ProductCard({ product, t, onViewDetails, onUnlock, isRedirecting
                 onClick={() => onViewDetails(product)}
                 className="group/btn flex w-full items-center justify-between text-sm font-medium text-emerald-700 dark:text-emerald-400"
               >
-                <span>View details</span>
+                <span>{t('viewDetails') || "View details"}</span>
                 <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
               </motion.button>
             </div>
